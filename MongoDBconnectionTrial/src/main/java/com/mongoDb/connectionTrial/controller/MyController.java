@@ -24,6 +24,8 @@ public class MyController {
 		return ResponseEntity.ok(save);
 	}
 
+	
+	
 	@GetMapping("/")
 	public ResponseEntity<?> getstudent(@RequestBody Student student) {
 		return ResponseEntity.ok(this.studentRepository.findAll());
