@@ -1,8 +1,12 @@
 package com.mongoDb.connectionTrial.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +28,27 @@ public class MyController {
 		return ResponseEntity.ok(save);
 	}
 
-	
-	
-	@GetMapping("/")
+	@GetMapping("/all")
 	public ResponseEntity<?> getstudent(@RequestBody Student student) {
 		return ResponseEntity.ok(this.studentRepository.findAll());
 	}
-	
+
+	// find By ID
+	@GetMapping("/Byid/{id}")
+	public ResponseEntity<?> getstudentByid(@PathVariable int id) {
+		return ResponseEntity.ok(this.studentRepository.findById(id));
+
+	}
+
+	// delete by id
+
+	@DeleteMapping("/deleteByid/{id}")
+	public ResponseEntity<Optional<Student>> deleteStudentByid(@PathVariable int id) {
+		ResponseEntity<Optional<Student>> student = ResponseEntity.ok(this.studentRepository.findById(id));
+		this.studentRepository.deleteById(id);
+		return student;
+	}
+
 	@GetMapping("/hi")
 	public String hi(@RequestBody Student student) {
 		return "hiii";
